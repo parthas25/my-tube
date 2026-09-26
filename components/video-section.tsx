@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ChevronRight, Play } from "lucide-react";
 import { CatImage } from "@/components/cat-image";
 import type { Video } from "@/lib/catalog";
@@ -51,9 +52,10 @@ function VideoCard({
   onOpen: (video: Video) => void;
 }) {
   const live = video.format === "live";
-
-  return (
-    <button type="button" onClick={() => onOpen(video)} className="group w-full text-left">
+  const href = video.id.startsWith("upload-") ? null : `/watch/${video.id}`;
+  const className = "group w-full text-left";
+  const content = (
+    <>
       <span className="relative block aspect-video overflow-hidden rounded-xl bg-[#ececec]">
         <CatImage
           src={video.image}
@@ -83,6 +85,20 @@ function VideoCard({
       <span className="block text-[12px] text-[#6a6a6a]">
         {video.views} · {video.published}
       </span>
-    </button>
+    </>
+  );
+
+  if (!href) {
+    return (
+      <button type="button" onClick={() => onOpen(video)} className={className}>
+        {content}
+      </button>
+    );
+  }
+
+  return (
+    <Link href={href} className={`block ${className}`}>
+      {content}
+    </Link>
   );
 }

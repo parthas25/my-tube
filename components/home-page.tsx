@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { CatImage } from "@/components/cat-image";
 import { CategoryChips } from "@/components/category-chips";
@@ -20,11 +21,18 @@ import {
   type Video,
 } from "@/lib/catalog";
 
-export function HomePage() {
+export function HomePage({
+  initialQuery = "",
+  initialSection = "home",
+}: {
+  initialQuery?: string;
+  initialSection?: SectionId;
+}) {
+  const router = useRouter();
   const [videos, setVideos] = useState(VIDEOS);
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<CategoryId>("all");
-  const [section, setSection] = useState<SectionId>("home");
+  const [query, setQuery] = useState(initialQuery);
+  const [category, setCategory] = useState<CategoryId>(categoryForSection(initialSection));
+  const [section, setSection] = useState<SectionId>(initialSection);
   const [channel, setChannel] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [watching, setWatching] = useState<Video | null>(null);
@@ -70,7 +78,7 @@ export function HomePage() {
   }
 
   function watchNow() {
-    document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+    router.push("/watch/playful-kittens");
   }
 
   const singleTitle = titleFor({ section, category, query, channel });

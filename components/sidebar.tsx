@@ -57,22 +57,33 @@ type SidebarProps = {
   open: boolean;
   onClose: () => void;
   onSelect: (section: SectionId) => void;
+  overlayOnly?: boolean;
 };
 
-export function Sidebar({ active, open, onClose, onSelect }: SidebarProps) {
+export function Sidebar({
+  active,
+  open,
+  onClose,
+  onSelect,
+  overlayOnly = false,
+}: SidebarProps) {
   return (
     <>
       {open ? (
         <button
           type="button"
           aria-label="Close menu"
-          className="fixed inset-0 z-40 bg-black/30 md:hidden"
+          className={`fixed inset-0 z-40 bg-black/30 ${overlayOnly ? "" : "md:hidden"}`}
           onClick={onClose}
         />
       ) : null}
       <aside
-        className={`fixed top-16 bottom-0 left-0 z-40 w-[232px] overflow-y-auto border-r border-[#efefef] bg-white px-3 py-3 sidebar-scroll transition-transform md:sticky md:visible md:translate-x-0 ${
-          open ? "visible translate-x-0" : "invisible -translate-x-full"
+        className={`top-16 bottom-0 left-0 z-40 w-[232px] overflow-y-auto border-r border-[#efefef] bg-white px-3 py-3 sidebar-scroll ${
+          overlayOnly
+            ? `fixed ${open ? "visible translate-x-0" : "invisible -translate-x-full"}`
+            : `fixed transition-transform md:sticky md:visible md:translate-x-0 ${
+                open ? "visible translate-x-0" : "invisible -translate-x-full"
+              }`
         }`}
       >
         <NavGroup items={PRIMARY} active={active} onSelect={onSelect} />

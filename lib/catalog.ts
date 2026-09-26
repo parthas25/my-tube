@@ -135,7 +135,7 @@ export const VIDEOS: Video[] = [
     channel: "Paws & Whiskers",
     views: "2.4M views",
     published: "3 days ago",
-    duration: "3:24",
+    duration: "6:21",
     image: "/cats/cat-07.jpg",
     imagePosition: "center 40%",
     categories: ["kittens", "cute"],
@@ -297,6 +297,85 @@ export const VIDEOS: Video[] = [
     format: "video",
     shelf: "recommended",
     watchLater: true,
+  },
+  {
+    id: "sleepy-kittens",
+    title: "Sleepy Kittens Compilation",
+    channel: "Meow Moments",
+    views: "1.8M views",
+    published: "2 weeks ago",
+    duration: "8:15",
+    image: "/cats/cat-16.jpg",
+    imagePosition: "center 45%",
+    categories: ["kittens", "cute"],
+    format: "video",
+    shelf: "extra",
+  },
+  {
+    id: "feather-toys",
+    title: "Kittens vs. Feather Toys (Hilarious!)",
+    channel: "Funny Cats TV",
+    views: "3.1M views",
+    published: "2 weeks ago",
+    duration: "4:32",
+    image: "/cats/cat-08.jpg",
+    imagePosition: "center 30%",
+    categories: ["kittens", "funny"],
+    format: "video",
+    shelf: "extra",
+  },
+  {
+    id: "exploring",
+    title: "Cats Exploring the Outdoors",
+    channel: "Adventure Cats",
+    views: "1.2M views",
+    published: "1 month ago",
+    duration: "7:08",
+    image: "/cats/cat-19.jpg",
+    imagePosition: "center 40%",
+    categories: ["breeds"],
+    format: "video",
+    shelf: "extra",
+  },
+  {
+    id: "cats-friends",
+    title: "Cats and Friends 🐶🐱",
+    channel: "Cute Animals",
+    views: "4.1M views",
+    published: "1 month ago",
+    duration: "6:45",
+    image: "/cats/cat-12.jpg",
+    imagePosition: "center 40%",
+    categories: ["cute", "funny"],
+    format: "video",
+    shelf: "extra",
+  },
+  {
+    id: "jumps",
+    title: "Amazing Cat Jumps and Tricks",
+    channel: "Talent Cats",
+    views: "2.9M views",
+    published: "1 month ago",
+    duration: "5:03",
+    image: "/cats/cat-01.jpg",
+    imagePosition: "center 30%",
+    categories: ["funny"],
+    format: "video",
+    shelf: "extra",
+  },
+  {
+    id: "paws-morning",
+    title: "Morning Zoomies with the Whiskers Crew",
+    channel: "Paws & Whiskers",
+    views: "640K views",
+    published: "6 days ago",
+    duration: "4:05",
+    image: "/cats/cat-02.jpg",
+    imagePosition: "center 40%",
+    categories: ["kittens"],
+    format: "video",
+    shelf: "extra",
+    subscribed: true,
   },
   {
     id: "brushing",
@@ -480,4 +559,12 @@ export function listChannels(videos: Video[]): ChannelSummary[] {
 
 export function categoryLabel(category: CategoryId): string {
   return CATEGORIES.find((item) => item.id === category)?.label ?? "Videos";
+}
+
+export function getVideo(id: string): Video | undefined {
+  return VIDEOS.find((video) => video.id === id);
+}
+
+export function isSectionId(value: string | undefined): value is SectionId {
+  return Boolean(value && value in SECTION_LABELS);
 }

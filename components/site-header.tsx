@@ -32,11 +32,14 @@ type SiteHeaderProps = {
   onMenu: () => void;
   onLogo: () => void;
   onNotify: (query: string) => void;
-  onUpload: (video: {
+  onUpload?: (video: {
     title: string;
     channel: string;
     image: string;
   }) => void;
+  onSearchSubmit?: (query: string) => void;
+  showUpload?: boolean;
+  menuAlways?: boolean;
 };
 
 export function SiteHeader({
@@ -46,6 +49,9 @@ export function SiteHeader({
   onLogo,
   onNotify,
   onUpload,
+  onSearchSubmit,
+  showUpload = true,
+  menuAlways = false,
 }: SiteHeaderProps) {
   const [notesOpen, setNotesOpen] = useState(false);
   const [uploadOpen, setUploadOpen] = useState(false);
@@ -68,7 +74,9 @@ export function SiteHeader({
     <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-[#ededed] bg-white px-3 sm:px-5">
       <button
         type="button"
-        className="grid h-10 w-10 place-items-center rounded-full text-[#3a3a3a] hover:bg-[#f3f3f3] md:hidden"
+        className={`grid h-10 w-10 place-items-center rounded-full text-[#3a3a3a] hover:bg-[#f3f3f3] ${
+          menuAlways ? "" : "md:hidden"
+        }`}
         aria-label="Open menu"
         onClick={onMenu}
       >
@@ -89,7 +97,10 @@ export function SiteHeader({
 
       <form
         className="mx-auto min-w-0 flex-1"
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSearchSubmit?.(query);
+        }}
         role="search"
       >
         <label className="relative mx-auto flex h-10 w-full max-w-[640px] items-center sm:h-11">
@@ -161,21 +172,23 @@ export function SiteHeader({
           className="hidden h-9 w-9 rounded-full object-cover object-[center_20%] sm:block"
         />
 
-        <button
-          type="button"
-          onClick={() => setUploadOpen(true)}
-          className="inline-flex h-10 items-center gap-1.5 rounded-full bg-meow px-3 text-sm font-semibold text-white shadow-sm hover:bg-[#ff4b26] sm:px-4"
-        >
-          <Upload className="h-4 w-4" />
-          <span className="hidden sm:inline">Upload</span>
-        </button>
+        {showUpload ? (
+          <button
+            type="button"
+            onClick={() => setUploadOpen(true)}
+            className="inline-flex h-10 items-center gap-1.5 rounded-full bg-meow px-3 text-sm font-semibold text-white shadow-sm hover:bg-[#ff4b26] sm:px-4"
+          >
+            <Upload className="h-4 w-4" />
+            <span className="hidden sm:inline">Upload</span>
+          </button>
+        ) : null}
       </div>
 
       {uploadOpen ? (
         <UploadDialog
           onClose={() => setUploadOpen(false)}
           onUpload={(video) => {
-            onUpload(video);
+            onUpload?.(video);
             setUploadOpen(false);
           }}
         />
