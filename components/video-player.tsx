@@ -112,21 +112,21 @@ export function VideoPlayer({
           <button
             type="button"
             className="grid h-8 w-8 place-items-center rounded-full hover:bg-white/15"
-            aria-label="Pause"
-            onClick={() => setPlaying(false)}
-          >
-            <Pause className="h-4 w-4 fill-white" />
-          </button>
-          <button
-            type="button"
-            className="grid h-8 w-8 place-items-center rounded-full hover:bg-white/15"
-            aria-label={playing ? "Play" : "Play"}
+            aria-label={playing ? "Pause" : "Play"}
             onClick={() => {
+              if (playing) {
+                setPlaying(false);
+                return;
+              }
               if (time >= duration) setTime(0);
               setPlaying(true);
             }}
           >
-            <Play className="h-4 w-4 fill-white" />
+            {playing ? (
+              <Pause className="h-4 w-4 fill-white" />
+            ) : (
+              <Play className="h-4 w-4 fill-white" />
+            )}
           </button>
           <span className="ml-1 text-xs font-medium tabular-nums">
             {formatClock(time)} / {video.duration === "LIVE" ? "LIVE" : formatClock(duration)}

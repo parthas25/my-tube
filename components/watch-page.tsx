@@ -76,7 +76,7 @@ export function WatchPage({ videoId }: { videoId: string }) {
   if (!video) return null;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <SiteHeader
         query={query}
         onQueryChange={setQuery}
@@ -174,12 +174,12 @@ function WatchBody({ video }: { video: Video }) {
       <article className="min-w-0">
         <VideoPlayer key={video.id} video={video} startAt={details.startAt} />
         <h1 className="mt-3 text-[20px] leading-7 font-bold">{details.headline}</h1>
-        <p className="mt-1 text-sm text-[#606060]">
+        <p className="mt-1 text-sm text-muted">
           {video.views} · {video.published}
         </p>
-        <p className="mt-2 flex flex-wrap gap-x-3 text-sm font-medium text-[#606060]">
+        <p className="mt-2 flex flex-wrap gap-x-3 text-sm font-medium text-muted">
           {details.tags.map((tag) => (
-            <Link key={tag} href={`/?q=${encodeURIComponent(tag)}`} className="hover:text-[#1c1c1c]">
+            <Link key={tag} href={`/?q=${encodeURIComponent(tag)}`} className="hover:text-foreground">
               #{tag}
             </Link>
           ))}
@@ -200,17 +200,17 @@ function WatchBody({ video }: { video: Video }) {
                   {video.channel}
                 </Link>
                 {details.verified ? (
-                  <BadgeCheck className="h-4 w-4 shrink-0 fill-[#606060] text-white" aria-label="Verified" />
+                  <BadgeCheck className="h-4 w-4 shrink-0 fill-muted text-white" aria-label="Verified" />
                 ) : null}
               </p>
-              <p className="text-xs text-[#606060]">{details.subscribers} subscribers</p>
+              <p className="text-xs text-muted">{details.subscribers} subscribers</p>
             </div>
             <button
               type="button"
               onClick={() => setSubscribed((on) => !on)}
               className={`h-9 rounded-full px-4 text-sm font-semibold ${
                 subscribed
-                  ? "bg-[#f2f2f2] text-[#1c1c1c] hover:bg-[#e8e8e8]"
+                  ? "bg-chip text-foreground hover:bg-hover"
                   : "bg-meow text-white hover:bg-[#ff4b26]"
               }`}
             >
@@ -219,12 +219,12 @@ function WatchBody({ video }: { video: Video }) {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <div className="flex overflow-hidden rounded-full bg-[#f2f2f2]">
+            <div className="flex overflow-hidden rounded-full bg-chip">
               <button
                 type="button"
                 onClick={toggleLike}
                 aria-pressed={liked}
-                className={`inline-flex h-9 items-center gap-1.5 px-3 text-sm font-medium hover:bg-[#e7e7e7] ${
+                className={`inline-flex h-9 items-center gap-1.5 px-3 text-sm font-medium hover:bg-hover ${
                   liked ? "text-meow" : ""
                 }`}
               >
@@ -236,9 +236,9 @@ function WatchBody({ video }: { video: Video }) {
                 onClick={toggleDislike}
                 aria-pressed={disliked}
                 aria-label="Dislike"
-                className="inline-flex h-9 items-center border-l border-white px-3 hover:bg-[#e7e7e7]"
+                className="inline-flex h-9 items-center border-l border-surface px-3 hover:bg-hover"
               >
-                <ThumbsDown className={`h-4 w-4 ${disliked ? "fill-[#1c1c1c]" : ""}`} />
+                <ThumbsDown className={`h-4 w-4 ${disliked ? "fill-foreground" : ""}`} />
               </button>
             </div>
             <ActionButton label={copied ? "Copied" : "Share"} onClick={() => void share()}>
@@ -247,18 +247,18 @@ function WatchBody({ video }: { video: Video }) {
             <a
               href={video.image}
               download={`${video.id}.jpg`}
-              className="inline-flex h-9 items-center gap-1.5 rounded-full bg-[#f2f2f2] px-3 text-sm font-medium hover:bg-[#e7e7e7]"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full bg-chip px-3 text-sm font-medium hover:bg-hover"
             >
               <Download className="h-4 w-4" />
               Download
             </a>
             <ActionButton label="Save" pressed={saved} onClick={() => setSaved((on) => !on)}>
-              <Bookmark className={`h-4 w-4 ${saved ? "fill-[#1c1c1c]" : ""}`} />
+              <Bookmark className={`h-4 w-4 ${saved ? "fill-foreground" : ""}`} />
             </ActionButton>
             <button
               type="button"
               aria-label="More actions"
-              className="grid h-9 w-9 place-items-center rounded-full bg-[#f2f2f2] hover:bg-[#e7e7e7]"
+              className="grid h-9 w-9 place-items-center rounded-full bg-chip hover:bg-hover"
               onClick={() => void share()}
             >
               <MoreVertical className="h-4 w-4" />
@@ -266,7 +266,7 @@ function WatchBody({ video }: { video: Video }) {
           </div>
         </div>
 
-        <div className="mt-4 rounded-xl bg-[#f2f2f2] px-3 py-3 text-sm">
+        <div className="mt-4 rounded-xl bg-chip px-3 py-3 text-sm">
           <p className={expanded ? "" : "line-clamp-2"}>{details.description}</p>
           <button
             type="button"
@@ -293,7 +293,7 @@ function WatchBody({ video }: { video: Video }) {
                 Sort by
               </button>
               {sortOpen ? (
-                <div className="absolute left-0 z-10 mt-2 w-36 rounded-xl border border-[#f0f0f0] bg-white p-1 shadow-lg">
+                <div className="absolute left-0 z-10 mt-2 w-36 rounded-xl border border-line bg-elevated p-1 shadow-lg">
                   {(["top", "newest"] as const).map((option) => (
                     <button
                       key={option}
@@ -302,7 +302,7 @@ function WatchBody({ video }: { video: Video }) {
                         setSort(option);
                         setSortOpen(false);
                       }}
-                      className={`block w-full rounded-lg px-3 py-1.5 text-left text-sm capitalize hover:bg-[#f6f6f6] ${
+                      className={`block w-full rounded-lg px-3 py-1.5 text-left text-sm capitalize hover:bg-hover ${
                         sort === option ? "font-semibold" : ""
                       }`}
                     >
@@ -349,7 +349,7 @@ function WatchBody({ video }: { video: Video }) {
               onChange={(event) => setDraft(event.target.value)}
               placeholder="Add a comment..."
               aria-label="Add a comment"
-              className="h-10 min-w-0 flex-1 border-b border-[#e4e4e4] bg-transparent text-sm outline-none placeholder:text-[#9a9a9a] focus:border-[#1c1c1c]"
+              className="h-10 min-w-0 flex-1 border-b border-line bg-transparent text-sm text-foreground outline-none placeholder:text-muted focus:border-foreground"
             />
           </form>
 
@@ -364,13 +364,13 @@ function WatchBody({ video }: { video: Video }) {
                   className="h-10 w-10 shrink-0 rounded-full object-cover"
                 />
                 <div>
-                  <p className="text-xs text-[#606060]">
-                    <span className="font-semibold text-[#1c1c1c]">{comment.author}</span>
+                  <p className="text-xs text-muted">
+                    <span className="font-semibold text-foreground">{comment.author}</span>
                     {" · "}
                     {comment.time}
                   </p>
                   <p className="mt-1 text-sm">{comment.text}</p>
-                  <p className="mt-1 inline-flex items-center gap-1 text-xs text-[#606060]">
+                  <p className="mt-1 inline-flex items-center gap-1 text-xs text-muted">
                     <ThumbsUp className="h-3.5 w-3.5" />
                     {comment.likes}
                   </p>
@@ -392,7 +392,7 @@ function WatchBody({ video }: { video: Video }) {
                 aria-pressed={selected}
                 onClick={() => setFilter(chip.id)}
                 className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium ${
-                  selected ? "bg-[#1f1f1f] text-white" : "bg-[#f2f2f2] text-[#1c1c1c] hover:bg-[#e8e8e8]"
+                  selected ? "bg-invert text-invert-fg" : "bg-chip text-foreground hover:bg-hover"
                 }`}
               >
                 {chip.label}
@@ -401,7 +401,7 @@ function WatchBody({ video }: { video: Video }) {
           })}
         </div>
         {rail.length === 0 ? (
-          <p className="py-8 text-sm text-[#606060]">No more videos in this pile.</p>
+          <p className="py-8 text-sm text-muted">No more videos in this pile.</p>
         ) : (
           <ul className="space-y-3">
             {rail.map((item) => (
@@ -434,7 +434,7 @@ function ActionButton({
       type="button"
       onClick={onClick}
       aria-pressed={pressed}
-      className="inline-flex h-9 items-center gap-1.5 rounded-full bg-[#f2f2f2] px-3 text-sm font-medium hover:bg-[#e7e7e7]"
+      className="inline-flex h-9 items-center gap-1.5 rounded-full bg-chip px-3 text-sm font-medium hover:bg-hover"
     >
       {children}
       {label}
@@ -448,7 +448,7 @@ function RelatedRow({ video, onHide }: { video: Video; onHide: () => void }) {
   return (
     <li className="flex gap-2">
       <Link href={`/watch/${video.id}`} className="flex min-w-0 flex-1 gap-2">
-        <span className="relative block h-[76px] w-[136px] shrink-0 overflow-hidden rounded-xl bg-[#ececec] xl:h-[94px] xl:w-[168px]">
+        <span className="relative block h-[76px] w-[136px] shrink-0 overflow-hidden rounded-xl bg-thumb xl:h-[94px] xl:w-[168px]">
           <CatImage
             src={video.image}
             alt=""
@@ -463,8 +463,8 @@ function RelatedRow({ video, onHide }: { video: Video; onHide: () => void }) {
         </span>
         <span className="min-w-0 flex-1">
           <span className="line-clamp-2 block text-sm leading-5 font-semibold">{video.title}</span>
-          <span className="mt-1 block text-xs text-[#606060]">{video.channel}</span>
-          <span className="block text-xs text-[#606060]">
+          <span className="mt-1 block text-xs text-muted">{video.channel}</span>
+          <span className="block text-xs text-muted">
             {video.views} · {video.published}
           </span>
         </span>
@@ -475,7 +475,7 @@ function RelatedRow({ video, onHide }: { video: Video; onHide: () => void }) {
           aria-label={`More actions for ${video.title}`}
           aria-expanded={open}
           onClick={() => setOpen((current) => !current)}
-          className="grid h-8 w-8 place-items-center rounded-full text-[#606060] hover:bg-[#f2f2f2]"
+          className="grid h-8 w-8 place-items-center rounded-full text-muted hover:bg-chip"
         >
           <MoreVertical className="h-4 w-4" />
         </button>
@@ -486,7 +486,7 @@ function RelatedRow({ video, onHide }: { video: Video; onHide: () => void }) {
               setOpen(false);
               onHide();
             }}
-            className="absolute right-0 z-10 mt-1 w-36 rounded-xl border border-[#f0f0f0] bg-white px-3 py-2 text-left text-sm shadow-lg hover:bg-[#f7f7f7]"
+            className="absolute right-0 z-10 mt-1 w-36 rounded-xl border border-line bg-elevated px-3 py-2 text-left text-sm shadow-lg hover:bg-hover"
           >
             Not interested
           </button>

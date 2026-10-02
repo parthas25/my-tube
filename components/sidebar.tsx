@@ -78,7 +78,7 @@ export function Sidebar({
         />
       ) : null}
       <aside
-        className={`top-16 bottom-0 left-0 z-40 w-[232px] overflow-y-auto border-r border-[#efefef] bg-white px-3 py-3 sidebar-scroll ${
+        className={`top-16 bottom-0 left-0 z-40 w-[232px] overflow-y-auto border-r border-line bg-surface px-3 py-3 sidebar-scroll ${
           overlayOnly
             ? `fixed ${open ? "visible translate-x-0" : "invisible -translate-x-full"}`
             : `fixed transition-transform md:sticky md:visible md:translate-x-0 ${
@@ -87,10 +87,10 @@ export function Sidebar({
         }`}
       >
         <NavGroup items={PRIMARY} active={active} onSelect={onSelect} />
-        <div className="my-3 border-t border-[#f0f0f0]" />
+        <div className="my-3 border-t border-line" />
         <NavGroup items={LIBRARY} active={active} onSelect={onSelect} />
-        <div className="my-3 border-t border-[#f0f0f0]" />
-        <p className="px-3 pt-1 pb-1 text-[13px] font-semibold text-[#606060]">
+        <div className="my-3 border-t border-line" />
+        <p className="px-3 pt-1 pb-1 text-[13px] font-semibold text-muted">
           Explore
         </p>
         <NavGroup items={EXPLORE} active={active} onSelect={onSelect} />
@@ -122,7 +122,7 @@ function NavGroup({
               className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-[14px] font-medium ${
                 selected
                   ? "bg-meow-soft text-meow"
-                  : "text-[#3a3a3a] hover:bg-[#f5f5f6]"
+                  : "text-foreground hover:bg-hover"
               }`}
             >
               <Icon

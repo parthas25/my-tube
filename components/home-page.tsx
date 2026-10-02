@@ -84,7 +84,7 @@ export function HomePage({
   const singleTitle = titleFor({ section, category, query, channel });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <SiteHeader
         query={query}
         onQueryChange={(value) => {
@@ -127,7 +127,7 @@ export function HomePage({
           onClose={() => setMenuOpen(false)}
           onSelect={selectSection}
         />
-        <main className="min-w-0 flex-1 bg-[#f6f7f8] px-4 py-4 sm:px-6 sm:py-5">
+        <main className="min-w-0 flex-1 px-4 py-4 sm:px-6 sm:py-5">
           <HeroBanner onWatch={watchNow} />
           <CategoryChips active={category} onSelect={selectCategory} />
           <div id="catalog">
@@ -209,7 +209,7 @@ function ChannelGrid({
             <button
               type="button"
               onClick={() => onOpen(item.name)}
-              className="flex w-full items-center gap-3 rounded-2xl bg-white px-3 py-3 text-left shadow-sm ring-1 ring-black/5 hover:ring-meow/40"
+              className="flex w-full items-center gap-3 rounded-2xl bg-elevated px-3 py-3 text-left shadow-sm ring-1 ring-foreground/10 hover:ring-meow/40"
             >
               <CatImage
                 src={item.image}
@@ -220,7 +220,7 @@ function ChannelGrid({
               />
               <span>
                 <span className="block text-sm font-semibold">{item.name}</span>
-                <span className="block text-xs text-[#6a6a6a]">
+                <span className="block text-xs text-muted">
                   {item.count} {item.count === 1 ? "video" : "videos"}
                 </span>
               </span>
@@ -234,9 +234,9 @@ function ChannelGrid({
 
 function EmptyState({ onClear }: { onClear: () => void }) {
   return (
-    <div className="mt-10 rounded-3xl bg-white px-6 py-12 text-center shadow-sm ring-1 ring-black/5">
+    <div className="mt-10 rounded-3xl bg-elevated px-6 py-12 text-center shadow-sm ring-1 ring-foreground/10">
       <p className="text-lg font-bold">No cat videos match that</p>
-      <p className="mt-1 text-sm text-[#6a6a6a]">
+      <p className="mt-1 text-sm text-muted">
         Try another breed, channel, or mood.
       </p>
       <button

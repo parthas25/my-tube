@@ -19,7 +19,7 @@ export function CategoryChips({
             aria-pressed={selected}
             onClick={() => onSelect(category.id)}
             className={`flex shrink-0 items-center gap-2 rounded-full py-1 pr-4 pl-1 text-sm font-semibold ${category.className} ${
-              selected ? "ring-2 ring-meow ring-offset-2 ring-offset-[#f6f7f8]" : ""
+              selected ? "ring-2 ring-meow ring-offset-2 ring-offset-background" : ""
             }`}
           >
             <Image

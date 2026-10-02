@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Bell, Menu, Mic, Search, Upload } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { CatLogo } from "@/components/cat-logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const NOTES = [
   {
@@ -71,10 +72,10 @@ export function SiteHeader({
   }, [notesOpen]);
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-[#ededed] bg-white px-3 sm:px-5">
+    <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-line bg-surface px-3 sm:px-5">
       <button
         type="button"
-        className={`grid h-10 w-10 place-items-center rounded-full text-[#3a3a3a] hover:bg-[#f3f3f3] ${
+        className={`grid h-10 w-10 place-items-center rounded-full text-foreground hover:bg-hover ${
           menuAlways ? "" : "md:hidden"
         }`}
         aria-label="Open menu"
@@ -90,7 +91,7 @@ export function SiteHeader({
       >
         <CatLogo />
         <span className="hidden text-[22px] leading-none font-extrabold tracking-tight sm:inline">
-          <span className="text-[#2a2a2a]">Meow</span>
+          <span className="text-foreground">Meow</span>
           <span className="text-meow">Tube</span>
         </span>
       </button>
@@ -105,22 +106,23 @@ export function SiteHeader({
       >
         <label className="relative mx-auto flex h-10 w-full max-w-[640px] items-center sm:h-11">
           <span className="sr-only">Search for cat videos, breeds, or channels</span>
-          <Search className="pointer-events-none absolute left-3 h-[18px] w-[18px] text-[#8a8a8a] sm:left-4" />
+          <Search className="pointer-events-none absolute left-3 h-[18px] w-[18px] text-muted sm:left-4" />
           <input
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder="Search for cat videos, breeds, or channels..."
-            className="h-10 w-full rounded-full border border-[#e6e6e6] bg-white pr-10 pl-9 text-sm text-[#1c1c1c] outline-none placeholder:text-[#a3a3a3] focus:border-[#ffb3a3] focus:ring-4 focus:ring-[#ff5c3a]/10 sm:h-11 sm:pr-12 sm:pl-11"
+            className="h-10 w-full rounded-full border border-line bg-surface pr-10 pl-9 text-sm text-foreground outline-none placeholder:text-muted focus:border-[#ffb3a3] focus:ring-4 focus:ring-[#ff5c3a]/10 sm:h-11 sm:pr-12 sm:pl-11"
           />
-          <Mic className="pointer-events-none absolute right-3 hidden h-[18px] w-[18px] text-[#8a8a8a] sm:right-4 sm:block" />
+          <Mic className="pointer-events-none absolute right-3 hidden h-[18px] w-[18px] text-muted sm:right-4 sm:block" />
         </label>
       </form>
 
       <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+        <ThemeToggle />
         <div className="relative" ref={notesRef}>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full text-[#3a3a3a] hover:bg-[#f3f3f3]"
+            className="grid h-10 w-10 place-items-center rounded-full text-foreground hover:bg-hover"
             aria-label="Notifications"
             aria-expanded={notesOpen}
             onClick={() => setNotesOpen((open) => !open)}
@@ -128,14 +130,14 @@ export function SiteHeader({
             <Bell className="h-5 w-5" />
           </button>
           {notesOpen ? (
-            <div className="absolute right-0 z-50 mt-2 w-[320px] overflow-hidden rounded-2xl border border-[#f0f0f0] bg-white p-2 shadow-[0_16px_50px_rgba(0,0,0,0.12)]">
+            <div className="absolute right-0 z-50 mt-2 w-[320px] overflow-hidden rounded-2xl border border-line bg-elevated p-2 shadow-[0_16px_50px_rgba(0,0,0,0.12)]">
               <p className="px-2 py-1.5 text-sm font-semibold">Notifications</p>
               <ul>
                 {NOTES.map((note) => (
                   <li key={note.title}>
                     <button
                       type="button"
-                      className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left hover:bg-[#f7f7f8]"
+                      className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left hover:bg-hover"
                       onClick={() => {
                         onNotify(note.query);
                         setNotesOpen(false);
@@ -152,7 +154,7 @@ export function SiteHeader({
                         <span className="block text-sm font-semibold">
                           {note.title}
                         </span>
-                        <span className="block text-xs text-[#6b6b6b]">
+                        <span className="block text-xs text-muted">
                           {note.body}
                         </span>
                       </span>
@@ -227,13 +229,13 @@ function UploadDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl"
+        className="w-full max-w-md rounded-3xl bg-elevated p-6 text-foreground shadow-2xl"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <h2 id={titleId} className="text-xl font-bold">
           Upload a cat video
         </h2>
-        <p className="mt-1 text-sm text-[#6b6b6b]">
+        <p className="mt-1 text-sm text-muted">
           It will show up at the front of Trending on this page.
         </p>
         <form
@@ -259,7 +261,7 @@ function UploadDialog({
                 setTitle(event.target.value);
                 setError("");
               }}
-              className="mt-1.5 h-11 w-full rounded-xl border border-[#e6e6e6] px-3 text-sm font-normal outline-none focus:border-[#ffb3a3] focus:ring-4 focus:ring-[#ff5c3a]/10"
+              className="mt-1.5 h-11 w-full rounded-xl border border-line bg-surface px-3 text-sm font-normal outline-none focus:border-[#ffb3a3] focus:ring-4 focus:ring-[#ff5c3a]/10"
               placeholder="Afternoon zoomies"
             />
           </label>
@@ -268,7 +270,7 @@ function UploadDialog({
             <input
               value={channel}
               onChange={(event) => setChannel(event.target.value)}
-              className="mt-1.5 h-11 w-full rounded-xl border border-[#e6e6e6] px-3 text-sm font-normal outline-none focus:border-[#ffb3a3] focus:ring-4 focus:ring-[#ff5c3a]/10"
+              className="mt-1.5 h-11 w-full rounded-xl border border-line bg-surface px-3 text-sm font-normal outline-none focus:border-[#ffb3a3] focus:ring-4 focus:ring-[#ff5c3a]/10"
             />
           </label>
           <label className="block text-sm font-semibold">
@@ -276,7 +278,7 @@ function UploadDialog({
             <input
               type="file"
               accept="image/*"
-              className="mt-1.5 block w-full text-sm font-normal text-[#6b6b6b] file:mr-3 file:rounded-full file:border-0 file:bg-meow-soft file:px-3 file:py-2 file:text-sm file:font-semibold file:text-meow"
+              className="mt-1.5 block w-full text-sm font-normal text-muted file:mr-3 file:rounded-full file:border-0 file:bg-meow-soft file:px-3 file:py-2 file:text-sm file:font-semibold file:text-meow"
               onChange={(event) => {
                 const file = event.target.files?.[0];
                 if (!file) return;
@@ -289,7 +291,7 @@ function UploadDialog({
             <button
               type="button"
               onClick={onClose}
-              className="h-10 rounded-full px-4 text-sm font-semibold text-[#3a3a3a] hover:bg-[#f4f4f5]"
+              className="h-10 rounded-full px-4 text-sm font-semibold text-foreground hover:bg-hover"
             >
               Cancel
             </button>

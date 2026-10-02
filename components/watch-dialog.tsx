@@ -31,7 +31,7 @@ export function WatchDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="w-full max-w-3xl overflow-hidden rounded-3xl bg-white shadow-2xl"
+        className="w-full max-w-3xl overflow-hidden rounded-3xl bg-elevated text-foreground shadow-2xl"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="relative aspect-video bg-black">
@@ -56,7 +56,7 @@ export function WatchDialog({
           <h2 id={titleId} className="text-lg font-bold">
             {video.title}
           </h2>
-          <p className="mt-1 text-sm text-[#6a6a6a]">
+          <p className="mt-1 text-sm text-muted">
             {video.channel} · {video.views} · {video.published}
           </p>
         </div>

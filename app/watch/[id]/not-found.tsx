@@ -5,7 +5,7 @@ export default function NotFound() {
     <div className="grid min-h-[60vh] place-items-center px-6 text-center">
       <div>
         <h1 className="text-2xl font-bold">That video wandered off</h1>
-        <p className="mt-2 text-sm text-[#606060]">
+        <p className="mt-2 text-sm text-muted">
           It is not in the MeowTube catalog.
         </p>
         <Link

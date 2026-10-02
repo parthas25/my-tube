@@ -26,7 +26,7 @@ export function VideoSection({
           <button
             type="button"
             onClick={onSeeAll}
-            className="inline-flex items-center text-[13px] font-medium text-[#6a6a6a] hover:text-[#1c1c1c]"
+            className="inline-flex items-center text-[13px] font-medium text-muted hover:text-foreground"
           >
             See all
             <ChevronRight className="h-4 w-4" />
@@ -56,7 +56,7 @@ function VideoCard({
   const className = "group w-full text-left";
   const content = (
     <>
-      <span className="relative block aspect-video overflow-hidden rounded-xl bg-[#ececec]">
+      <span className="relative block aspect-video overflow-hidden rounded-xl bg-thumb">
         <CatImage
           src={video.image}
           alt=""
@@ -78,11 +78,11 @@ function VideoCard({
           {video.duration}
         </span>
       </span>
-      <span className="mt-2 line-clamp-2 block text-[14px] leading-5 font-semibold text-[#1a1a1a]">
+      <span className="mt-2 line-clamp-2 block text-[14px] leading-5 font-semibold text-foreground">
         {video.title}
       </span>
-      <span className="mt-1 block text-[12px] text-[#6a6a6a]">{video.channel}</span>
-      <span className="block text-[12px] text-[#6a6a6a]">
+      <span className="mt-1 block text-[12px] text-muted">{video.channel}</span>
+      <span className="block text-[12px] text-muted">
         {video.views} · {video.published}
       </span>
     </>
